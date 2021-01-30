@@ -1,5 +1,7 @@
 const commandLineUsage = require("command-line-usage");
+const readline = require("readline");
 
+import { Console } from "console";
 import { listTask } from "./list-task";
 import { Task } from "./task";
 export const sections = [
@@ -21,6 +23,7 @@ export const sections = [
       {
         name: "r",
         description: "Removes an task",
+        typeLabel: "number",
       },
       {
         name: "c",
@@ -31,14 +34,39 @@ export const sections = [
 ];
 const usage = commandLineUsage(sections);
 console.log(usage);
-let dog = new Task(1, "Walk the dog");
+
 let milk = new Task(2, "Buy milk");
-let homework = new Task(3, "Do homework");
+
 if (process.argv.indexOf("--l") != -1) {
   listTask();
 }
 if (process.argv.indexOf("--a") != -1) {
-  dog.addTask();
-  milk.addTask();
-  homework.addTask();
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  rl.question(
+    "What do you want to do? Please add one number and the task",
+    (answer) => {
+      // answer in number, string
+      let splitAnswer = answer.split(",");
+      let answer1 = splitAnswer[0];
+      let answer2 = splitAnswer[1];
+      new Task(answer1, answer2).addTask();
+      rl.close();
+    }
+  );
+}
+if (process.argv.indexOf("--r") != -1) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  rl.question("Which task do you want to remove ", (answer) => {
+    milk.removeTask(answer);
+    rl.close();
+  });
+}
+if (process.argv.indexOf("--c") != -1) {
+  milk.statusCheck();
 }

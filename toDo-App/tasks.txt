@@ -1,4 +1,9 @@
 
-1 - Walk the dog.
-2 - Buy milk.
-3 - Do homework.
+undefinedNaN - undefined.
+undefinedNaN - undefined.
+undefinedNaN - undefined.
+undefinedNaN - undefined.
+undefinedNaN - undefined.
+undefined10 -  kiskutya.
+false5 - kiscica.
+[ ]10 -  kérlek működj.
