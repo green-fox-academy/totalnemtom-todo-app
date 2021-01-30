@@ -35,27 +35,22 @@ export const sections = [
 const usage = commandLineUsage(sections);
 console.log(usage);
 
-let milk = new Task(2, "Buy milk");
-
 if (process.argv.indexOf("--l") != -1) {
-  listTask();
+  try {
+    listTask();
+  } catch (e) {
+    console.log("nothing to do today");
+  }
 }
 if (process.argv.indexOf("--a") != -1) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  rl.question(
-    "What do you want to do? Please add one number and the task ",
-    (answer) => {
-      // answer in number, string
-      let splitAnswer = answer.split(",");
-      let answer1 = splitAnswer[0];
-      let answer2 = splitAnswer[1];
-      new Task(answer1, answer2).addTask();
-      rl.close();
-    }
-  );
+  rl.question("What do you want to do? ", (answer) => {
+    new Task(answer).addTask();
+    rl.close();
+  });
 }
 if (process.argv.indexOf("--r") != -1) {
   const rl = readline.createInterface({
@@ -63,7 +58,7 @@ if (process.argv.indexOf("--r") != -1) {
     output: process.stdout,
   });
   rl.question("Which task do you want to remove ", (answer) => {
-    milk.removeTask(answer);
+    Task.removeTask(answer);
     rl.close();
   });
 }
@@ -73,7 +68,7 @@ if (process.argv.indexOf("--c") != -1) {
     output: process.stdout,
   });
   rl.question("Which task did you do? ", (answer) => {
-    milk.statusCheck(answer);
+    Task.statusCheck(answer);
     rl.close();
   });
 }

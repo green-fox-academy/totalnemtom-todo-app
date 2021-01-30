@@ -2,32 +2,37 @@ let fs = require("fs");
 export class Task {
   number: number;
   task: string;
-  status: string;
-  constructor(number: number, task: string) {
-    this.number = number;
+  static status: string;
+  constructor(task: string) {
     this.task = task;
-    this.status = "[ ]";
+    Task.status = "[ ]";
   }
-  statusCheck(number?: number) {
-    this.status = "[X]";
+  static statusCheck(number: number) {
+    Task.status = "[X]";
     let readFIle = fs.readFileSync("tasks.txt", "utf-8");
-    let splitFile = readFIle.split("\n");
-    splitFile[number] =
-      "\n" + this.status + +this.number + " - " + this.task + ".";
-    let joinFile = splitFile.join("\n");
-    fs.writeFileSync("tasks.txt", joinFile);
+    let splitFile: string[] = readFIle.split("\n");
+    for (let i = 0; i <= number; i++) {
+      if ((i = number)) {
+        let splitRow: string[] = splitFile[i].split("-");
+        splitRow[0] = "[X] ";
+        let joinRow = splitRow.join("-");
+        let joinFile = splitFile.splice(number, 1, joinRow);
+        let correctArr = splitFile.join("\n").toString();
+        fs.writeFileSync("tasks.txt", correctArr);
+      }
+    }
   }
   addTask(): void {
     fs.appendFileSync(
       "tasks.txt",
-      "\n" + this.status + +this.number + " - " + this.task + ".",
+      Task.status + " - " + this.task + ".\n",
       "utf-8"
     );
   }
-  removeTask(number: number): void {
+  static removeTask(number: number): void {
     let readFIle = fs.readFileSync("tasks.txt", "utf-8");
     let splitFile = readFIle.split("\n");
-    let spliceFile = splitFile.splice(number, 1);
+    let spliceFile = splitFile.splice(number - 1, 1);
     let joinFile = splitFile.join("\n");
     fs.writeFileSync("tasks.txt", joinFile);
   }
