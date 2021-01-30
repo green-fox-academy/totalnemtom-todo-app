@@ -10,6 +10,12 @@ export class Task {
   }
   statusCheck(number?: number) {
     this.status = "[X]";
+    let readFIle = fs.readFileSync("tasks.txt", "utf-8");
+    let splitFile = readFIle.split("\n");
+    splitFile[number] =
+      "\n" + this.status + +this.number + " - " + this.task + ".";
+    let joinFile = splitFile.join("\n");
+    fs.writeFileSync("tasks.txt", joinFile);
   }
   addTask(): void {
     fs.appendFileSync(

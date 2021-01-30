@@ -46,7 +46,7 @@ if (process.argv.indexOf("--a") != -1) {
     output: process.stdout,
   });
   rl.question(
-    "What do you want to do? Please add one number and the task",
+    "What do you want to do? Please add one number and the task ",
     (answer) => {
       // answer in number, string
       let splitAnswer = answer.split(",");
@@ -68,5 +68,15 @@ if (process.argv.indexOf("--r") != -1) {
   });
 }
 if (process.argv.indexOf("--c") != -1) {
-  milk.statusCheck();
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  rl.question("Which task did you do? ", (answer) => {
+    milk.statusCheck(answer);
+    rl.close();
+  });
 }
+
+///need to put task in array
+// errorhandling missing

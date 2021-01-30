@@ -1,9 +1,3 @@
 
-undefinedNaN - undefined.
-undefinedNaN - undefined.
-undefinedNaN - undefined.
-undefinedNaN - undefined.
-undefinedNaN - undefined.
-undefined10 -  kiskutya.
-false5 - kiscica.
-[ ]10 -  kérlek működj.
+
+[X]2 - Buy milk.
