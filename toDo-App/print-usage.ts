@@ -13,21 +13,25 @@ export const sections = [
     header: "Options",
     optionList: [
       {
-        name: "l",
+        name: "list",
+        alias: "l",
         description: "Lists all the tasks",
       },
       {
-        name: "a",
+        name: "add",
+        alias: "a",
         description: "Adds a new task",
       },
       {
-        name: "r",
-        description: "Removes an task",
+        name: "remove",
+        alias: "r",
+        description: "Removes a task",
         typeLabel: "number",
       },
       {
-        name: "c",
-        description: "Completes an task",
+        name: "complete",
+        alias: "c",
+        description: "Completes a task",
       },
     ],
   },
@@ -42,7 +46,7 @@ if (process.argv.indexOf("--l") != -1) {
     console.log("nothing to do today");
   }
 }
-if (process.argv.indexOf("--a") != -1) {
+if (process.argv.indexOf("--a" || "add") != -1) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -52,17 +56,21 @@ if (process.argv.indexOf("--a") != -1) {
     rl.close();
   });
 }
-if (process.argv.indexOf("--r") != -1) {
+if (process.argv.indexOf("--r" || "remove") != -1) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  rl.question("Which task do you want to remove ", (answer) => {
-    Task.removeTask(answer);
+  rl.question("Which task do you want to remove ", (answer: number) => {
+    try {
+      if (answer) Task.removeTask(answer);
+    } catch (e) {
+      console.log("Unable to remove: index is out of bound");
+    }
     rl.close();
   });
 }
-if (process.argv.indexOf("--c") != -1) {
+if (process.argv.indexOf("-c" || "complete") != -1) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -72,6 +80,12 @@ if (process.argv.indexOf("--c") != -1) {
     rl.close();
   });
 }
+// if (
+//   process.argv.indexOf(
+//     "--l" || "--add" || "-a" || "-r" || "--remove" || "-c" || "--complete"
+//   ) <= -1
+// ) {
+//   console.log("WRONG INPUT!\n");
+// }
 
-///need to put task in array
 // errorhandling missing

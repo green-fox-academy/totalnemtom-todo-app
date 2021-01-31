@@ -1,3 +1,5 @@
+import { type } from "os";
+
 let fs = require("fs");
 export class Task {
   number: number;
@@ -8,7 +10,6 @@ export class Task {
     Task.status = "[ ]";
   }
   static statusCheck(number: number) {
-    Task.status = "[X]";
     let readFIle = fs.readFileSync("tasks.txt", "utf-8");
     let splitFile: string[] = readFIle.split("\n");
     for (let i = 0; i <= number; i++) {
@@ -16,7 +17,7 @@ export class Task {
         let splitRow: string[] = splitFile[i].split("-");
         splitRow[0] = "[X] ";
         let joinRow = splitRow.join("-");
-        let joinFile = splitFile.splice(number, 1, joinRow);
+        splitFile.splice(number, 1, joinRow);
         let correctArr = splitFile.join("\n").toString();
         fs.writeFileSync("tasks.txt", correctArr);
       }
@@ -31,9 +32,17 @@ export class Task {
   }
   static removeTask(number: number): void {
     let readFIle = fs.readFileSync("tasks.txt", "utf-8");
-    let splitFile = readFIle.split("\n");
-    let spliceFile = splitFile.splice(number - 1, 1);
+    let splitFile: string[] = readFIle.split("\n");
+    let lines = splitFile.length;
+    if (lines < number) {
+      throw console.error("Unable to remove: index is out of bound");
+    }
+    splitFile.splice(number - 1, 1);
     let joinFile = splitFile.join("\n");
     fs.writeFileSync("tasks.txt", joinFile);
   }
+  // static getLineNumber(): number {
+  //   let readFIle = fs.readFileSync("tasks.txt", "utf-8");
+  //   return readFIle.lenght;
+  // }
 }
